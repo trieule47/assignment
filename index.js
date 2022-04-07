@@ -20,7 +20,7 @@ const dateRa = new Date('2022-04-07 11:00:00')
 // const dateVao = new Date('2022-04-06 10:00:00')
 // const dateRa = new Date('2022-04-07 11:00:00')
 
-var total=0;
+var total = 0;
 
 total = tinhTienPhong(dateVao, dateRa)
 console.log('total: ' + total)
@@ -28,18 +28,19 @@ console.log('total: ' + total)
 function tinhTienPhong(dateVao, dateRa) {
 
     var ngayVao = dateVao.getDay();
-    console.log("ngay vao: "+ngayVao);
+    console.log("ngay vao: " + ngayVao);
 
     var gioVao = dateVao.getHours();
     var phutVao = dateVao.getMinutes();
 
     var ngayRa = dateRa.getDay();
-    console.log("ngay ra: "+ngayRa);
+    console.log("ngay ra: " + ngayRa);
 
     var gioRa = dateRa.getHours();
     var phutRa = dateRa.getMinutes();
 
-    if(gioVao > 12) {
+    // h checkin > 12 => h checkin = 12
+    if (gioVao > 12) {
         gioVao = 12;
     }
 
@@ -48,29 +49,30 @@ function tinhTienPhong(dateVao, dateRa) {
 
     switch (ngay) {
         case 0:
-            if(gio > 0 && gio < 7) { 
+            if (gio > 0 && gio < 7) {
                 total += gio * 30;
             }
 
-            if(gio > 6) {
+            if (gio > 6) {
                 total += 200;
             }
+            console.log("tong tien: " + total);
             break;
-        default: 
-            //30k * 7 = 210k >200k giora > giovao mơi tính
-            console.log("gio vuot: "+gio);
-            if(gio > 0 && gio < 7) { 
+        default:
+            //30k * 7 = 210k max=> 200k & giora > giovao mới tính
+            console.log("gio vuot: " + gio);
+            if (gio > 0 && gio < 7) {
                 total += gio * 30;
             }
 
-            if( gio > 6) {
+            if (gio > 6) {
                 total += 200;
             }
 
-            total += 200*ngay;
-            console.log("tong tien: " +total);
+            total += 200 * ngay;
+            console.log("tong tien: " + total);
             break;
-        
+
     }
     return total;
 }
