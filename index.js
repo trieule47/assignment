@@ -1,78 +1,47 @@
-//object so sánh vùng nhớ
-//LÊ NGỌC VĨNH TRIỀU
-console.log('hello tien phong cua ban la:')
-
-const giaQuaDem = 200
-//test
-////200k
-const dateVao = new Date('2022-04-06 13:00:00')
-const dateRa = new Date('2022-04-07 11:00:00')
-// ////230k
-// const dateVao = new Date('2022-04-06 13:00:00')
-// const dateRa = new Date('2022-04-07 13:00:00')
-// ////290k
-// const dateVao = new Date('2022-04-06 13:00:00')
-// const dateRa = new Date('2022-04-07 15:00:00')
-// ////400k
-// const dateVao = new Date('2022-04-06 13:00:00')
-// const dateRa = new Date('2022-04-07 20:00:00')
-// ////230k
-// const dateVao = new Date('2022-04-06 10:00:00')
-// const dateRa = new Date('2022-04-07 11:00:00')
-
-var total = 0;
-
-total = tinhTienPhong(dateVao, dateRa)
-console.log('total: ' + total)
-
-function tinhTienPhong(dateVao, dateRa) {
-
-    var ngayVao = dateVao.getDay();
-    console.log("ngay vao: " + ngayVao);
-
-    var gioVao = dateVao.getHours();
-    var phutVao = dateVao.getMinutes();
-
-    var ngayRa = dateRa.getDay();
-    console.log("ngay ra: " + ngayRa);
-
-    var gioRa = dateRa.getHours();
-    var phutRa = dateRa.getMinutes();
-
-    // h checkin > 12 => h checkin = 12
-    if (gioVao > 12) {
-        gioVao = 12;
+const priceOverNight = 200;
+let total = 0;
+function calculateAdditionalPrice(dateInInput, dateOutInput) {
+    let dayIn = dateInInput.getDay();
+    let hoursIn = dateInInput.getHours();
+    let dayOut = dateOutInput.getDay();
+    let hoursOut = dateOutInput.getHours();
+    if (hoursIn > 12) {
+        hoursIn = 12;
     }
-
-    var ngay = ngayRa - ngayVao;
-    var gio = gioRa - gioVao;
-
-    switch (ngay) {
+    let dayStay = dayOut - dayIn;
+    let hourStay = hoursOut - hoursIn;
+    switch (dayStay) {
         case 0:
-            if (gio > 0 && gio < 7) {
-                total += gio * 30;
+            if (hourStay > 0 && hourStay < 7) {
+                total += hourStay * 30;
             }
-
-            if (gio > 6) {
-                total += 200;
+            if (hourStay > 6) {
+                total += priceOverNight;
             }
-            console.log("tong tien: " + total);
             break;
         default:
-            //30k * 7 = 210k max=> 200k & giora > giovao mới tính
-            console.log("gio vuot: " + gio);
-            if (gio > 0 && gio < 7) {
-                total += gio * 30;
+            if (hourStay > 0 && hourStay < 7) {
+                total += hourStay * 30;
             }
-
-            if (gio > 6) {
-                total += 200;
+            if (hourStay > 6) {
+                total += priceOverNight;
             }
-
-            total += 200 * ngay;
-            console.log("tong tien: " + total);
+            total += priceOverNight * dayStay;
             break;
-
     }
     return total;
 }
+console.log('Test 200k In: 2022-04-06 13:00:00; out: 2022-04-07 11:00:00');
+console.log('toltal: ' + calculateAdditionalPrice(new Date('2022-04-06 13:00:00'), new Date('2022-04-07 11:00:00')));
+total = 0;
+console.log('Test 230k In: 2022-04-06 13:00:00; out: 2022-04-07 13:00:00');
+console.log('toltal: ' + calculateAdditionalPrice(new Date('2022-04-06 13:00:00'), new Date('2022-04-07 13:00:00')));
+total = 0;
+console.log('Test 290k In: 2022-04-06 13:00:00; out: 2022-04-07 15:00:00');
+console.log('toltal: ' + calculateAdditionalPrice(new Date('2022-04-06 13:00:00'), new Date('2022-04-07 15:00:00')));
+total = 0;
+console.log('Test 400K In: 2022-04-06 13:00:00; out: 2022-04-07 20:00:00');
+console.log('toltal: ' + calculateAdditionalPrice(new Date('2022-04-06 13:00:00'), new Date('2022-04-07 20:00:00')));
+total = 0;
+console.log('Test 230k In: 2022-04-06 10:00:00; out: 2022-04-07 11:00:00');
+console.log('toltal: ' + calculateAdditionalPrice(new Date('2022-04-06 10:00:00'), new Date('2022-04-07 11:00:00')));
